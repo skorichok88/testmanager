@@ -1,0 +1,5 @@
+CREATE TABLE `answers` (
+  `id` INT NOT NULL,
+  `text` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

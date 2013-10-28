@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+	                       http://www.springframework.org/schema/tx
+	                       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+
+        <property name="driverClass">
+            <value>${com.skoryk.jdbc.driver}</value>
+        </property>
+        <property name="jdbcUrl">
+            <value>${com.skoryk.jdbc.url}</value>
+        </property>
+        <property name="user">
+            <value>${com.skoryk.jdbc.username}</value>
+        </property>
+        <property name="password">
+            <value>${com.skoryk.jdbc.password}</value>
+        </property>
+    </bean>
+    <bean id="com.skoryk.testmanager.db.SessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource">
+            <ref bean="dataSource" />
+        </property>
+
+        <property name="configLocation">
+            <value>classpath:com/skoryk/testmanager/db/hibarnate.cfg.xml</value>
+        </property>
+
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${com.skoryk.jdbc.hibernate.dialect}</prop>
+                <prop key="show_sql">${com.skoryk.jdbc.hibernate.showSql}</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory">
+            <ref bean="com.skoryk.testmanager.db.SessionFactory" />
+        </property>
+    </bean>
+    <tx:annotation-driven />
+</beans>
