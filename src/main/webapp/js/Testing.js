@@ -28,11 +28,10 @@ Testing = function(options)
     this.timer = function()
     {
         self.secondsCount = self.secondsCount - 1;
-        if (self.secondsCount < 0)
+        if (self.secondsCount <= 0)
         {
             clearInterval(self.counter);
             self.answer();
-            return;
         }
 
         $("#secondsContainer").html(self.secondsCount);
@@ -40,6 +39,7 @@ Testing = function(options)
 
     this.resetTimer = function()
     {
+        clearInterval(self.counter);
         self.secondsCount = 30;
         self.counter = setInterval(self.timer, 1000);
     }
